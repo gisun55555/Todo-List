@@ -22,3 +22,11 @@
   border: 2px solid var(--slate-900, #0f172a);
   background: var(--slate-200, #e2e8f0);
 }
+
+@media screen and (max-width: 768px) {
+  .container > button {
+    font-size: 0;
+    width: 56px;
+    height: 56px;
+  }
+}
