@@ -1,0 +1,32 @@
+.container {
+  border: 1px solid;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: 27px;
+  border: 2px solid var(--slate-900, #0f172a);
+  background: var(--white, #fff);
+
+  .icon {
+    width: 32px;
+    margin-right: 16px;
+    display: flex;
+  }
+  .content {
+    font-size: 16px;
+    text-align: center;
+    color: var(--slate-800, #1e293b);
+  }
+}
+
+.container.done {
+  background: var(--violet-100, #ede9fe);
+}
+
+.container.done .content {
+  text-decoration-line: line-through; /* 수정된 부분 */
+  color: var(--slate-800, #1e293b);
+}
