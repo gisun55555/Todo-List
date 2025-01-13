@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.container1 {
+  border: 1px solid;
+  width: 100%;
+}
+
+.imageContainer {
+  border: 1px solid;
+
+  width: 100%;
+}
+
+.momoCotainer {
+  border: 1px solid;
+
+  width: 100%;
+}
+
+.buttonContainer {
+  border: 1px solid;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 1025px) {
+  .imageContainer {
+    width: 49.5%;
+  }
+
+  .momoCotainer {
+    width: 49.5%;
+  }
+
+  .buttonContainer {
+    justify-content: flex-end;
+  }
+}
