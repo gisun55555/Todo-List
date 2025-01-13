@@ -17,7 +17,6 @@ export default function TodoBar({
   onClick,
   itemId,
 }: TodoBarProps) {
-  const isTodo = type === 'todo';
   console.log(itemId);
 
   return (
