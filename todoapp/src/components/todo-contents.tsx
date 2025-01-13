@@ -40,6 +40,7 @@ export default function TodoContents({
               type="todo"
               onClick={() => {}}
               onIconClick={() => toggleItemStatus(item.id, item.isCompleted)}
+              itemId={item.id}
             >
               {item.name}
             </TodoBar>
@@ -71,6 +72,7 @@ export default function TodoContents({
               type="done"
               onClick={() => {}}
               onIconClick={() => toggleItemStatus(item.id, item.isCompleted)}
+              itemId={item.id}
             >
               <div>{item.name}</div>
             </TodoBar>
