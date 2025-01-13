@@ -19,7 +19,7 @@ export default function GlobalLayout({ children }: { children: ReactNode }) {
         </Link>
       </header>
 
-      <main className={style.main}>내용 넣을예정요{children}</main>
+      <main className={style.main}>{children}</main>
       {/* <footer>2</footer> */}
     </div>
   );
