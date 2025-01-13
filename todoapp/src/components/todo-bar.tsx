@@ -4,14 +4,30 @@ import style from './todo-bar.module.css';
 interface TodoBarProps {
   type: 'todo' | 'done';
   children: React.ReactNode;
+  onIconClick: () => void;
+  onClick: () => void;
 }
 
-export default function TodoBar({ type, children }: TodoBarProps) {
+export default function TodoBar({
+  type,
+  children,
+  onIconClick,
+  onClick,
+}: TodoBarProps) {
   const isTodo = type === 'todo';
 
   return (
-    <div className={`${style.container} ${type === 'done' ? style.done : ''}`}>
-      <div className={style.icon}>
+    <div
+      className={`${style.container} ${type === 'done' ? style.done : ''}`}
+      onClick={onClick}
+    >
+      <div
+        className={style.icon}
+        onClick={(e) => {
+          e.stopPropagation();
+          onIconClick();
+        }}
+      >
         <Image
           src={
             type === 'todo'
