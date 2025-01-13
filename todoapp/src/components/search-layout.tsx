@@ -1,26 +1,36 @@
 import { useState } from 'react';
 import style from './search-layout.module.css';
 
-export default function SearchLayout() {
-  const [search, setSearch] = useState('');
+interface SearchLayoutProps {
+  onAddItem: (name: string) => void;
+}
 
-  const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-  };
-  //엔더누를시 api 요청 보내기
-  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+export default function SearchLayout({ onAddItem }: SearchLayoutProps) {
+  const [inputValue, setInputValue] = useState('');
+
+  const handleAdd = () => {
+    if (inputValue.trim()) {
+      onAddItem(inputValue);
+      setInputValue('');
     }
   };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleAdd();
+    }
+  };
+
   return (
     <div className={style.container}>
       <input
-        value={search}
-        onKeyDown={onKeyDown}
-        onChange={onChangeSearch}
-        placeholder="할 일을 입력해주세요"
+        type="text"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        onKeyDown={handleKeyDown}
+        placeholder="새로운 할 일을 입력하세요"
       />
-      <button>+ 추가하기</button>
+      <button onClick={handleAdd}>추가</button>
     </div>
   );
 }
