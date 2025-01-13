@@ -1,14 +1,22 @@
-import { useState } from 'react';
+import { Item } from '@/api/items';
 import style from './todo-contents.module.css';
 import Image from 'next/image';
 import TodoBar from './todo-bar';
 
-export default function TodoContents() {
-  const [todoItems, setTodoItems] = useState([1, 2, 3]);
-  const [doneItems, setDoneItems] = useState([]);
+interface TodoContentsProps {
+  todoItems: Item[];
+  doneItems: Item[];
+  toggleItemStatus: (itemId: number, currentStatus: boolean) => void;
+}
 
+export default function TodoContents({
+  todoItems,
+  doneItems,
+  toggleItemStatus,
+}: TodoContentsProps) {
   return (
     <div className={style.container}>
+      {/* TO DO 영역 */}
       <div className={style.todoContainer}>
         <div className={style.header}>TO DO</div>
         {todoItems.length === 0 ? (
@@ -26,9 +34,20 @@ export default function TodoContents() {
             </p>
           </div>
         ) : (
-          todoItems.map((item, index) => <TodoBar type="todo">{item}</TodoBar>)
+          todoItems.map((item) => (
+            <TodoBar
+              key={item.id}
+              type="todo"
+              onClick={() => {}}
+              onIconClick={() => toggleItemStatus(item.id, item.isCompleted)}
+            >
+              {item.name}
+            </TodoBar>
+          ))
         )}
       </div>
+
+      {/* DONE 영역 */}
       <div className={style.doneContainer}>
         <div className={style.header}>DONE</div>
         {doneItems.length === 0 ? (
@@ -44,10 +63,18 @@ export default function TodoContents() {
               <br />
               해야 할 일을 체크해보세요!
             </p>
-            =
           </div>
         ) : (
-          todoItems.map((item, index) => <TodoBar type="done">{item}</TodoBar>)
+          doneItems.map((item) => (
+            <TodoBar
+              key={item.id}
+              type="done"
+              onClick={() => {}}
+              onIconClick={() => toggleItemStatus(item.id, item.isCompleted)}
+            >
+              <div>{item.name}</div>
+            </TodoBar>
+          ))
         )}
       </div>
     </div>
