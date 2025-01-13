@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://assignment-todolist-api.vercel.app/api';
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export interface Item {
   id: number;
@@ -45,7 +45,7 @@ export const getItemDetails = async (
   return response.data;
 };
 
-// 항목 수정
+// 투두 수정
 export const updateItem = async (
   tenantId: string,
   itemId: number,
@@ -58,6 +58,24 @@ export const updateItem = async (
   return response.data;
 };
 
+// 항목 수정
+export const updateItemDetails = async (
+  tenantId: string,
+  itemId: number,
+  updatedData: Partial<Item>,
+): Promise<Item> => {
+  try {
+    const response = await axios.patch<Item>(
+      `${BASE_URL}/${tenantId}/items/${itemId}`,
+      updatedData,
+    );
+    return response.data;
+  } catch (error) {
+    console.error('항목 수정 실패:', error);
+    throw error;
+  }
+};
+
 // 항목 삭제
 export const deleteItem = async (
   tenantId: string,
@@ -67,4 +85,24 @@ export const deleteItem = async (
     `${BASE_URL}/${tenantId}/items/${itemId}`,
   );
   return response.data;
+};
+
+export const uploadImage = async (tenantId: string, file: File) => {
+  const formData = new FormData();
+  formData.append('image', file);
+
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/${tenantId}/images/upload`,
+      formData,
+      {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      },
+    );
+
+    return response.data.url;
+  } catch (error) {
+    console.error('이미지 업로드 실패:', error);
+    throw error;
+  }
 };
