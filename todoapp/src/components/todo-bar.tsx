@@ -1,11 +1,13 @@
 import Image from 'next/image';
 import style from './todo-bar.module.css';
+import Link from 'next/link';
 
 interface TodoBarProps {
   type: 'todo' | 'done';
   children: React.ReactNode;
   onIconClick: () => void;
   onClick: () => void;
+  itemId: number;
 }
 
 export default function TodoBar({
@@ -13,11 +15,14 @@ export default function TodoBar({
   children,
   onIconClick,
   onClick,
+  itemId,
 }: TodoBarProps) {
   const isTodo = type === 'todo';
+  console.log(itemId);
 
   return (
-    <div
+    <Link
+      href={`/items/${itemId}`}
       className={`${style.container} ${type === 'done' ? style.done : ''}`}
       onClick={onClick}
     >
@@ -25,6 +30,7 @@ export default function TodoBar({
         className={style.icon}
         onClick={(e) => {
           e.stopPropagation();
+          e.preventDefault();
           onIconClick();
         }}
       >
@@ -40,6 +46,6 @@ export default function TodoBar({
         />
       </div>
       <div className={style.content}>{children}</div>
-    </div>
+    </Link>
   );
 }
