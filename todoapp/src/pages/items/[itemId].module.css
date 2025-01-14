@@ -1,24 +1,24 @@
 .container {
   display: flex;
   flex-wrap: wrap;
-}
-
-.container1 {
-  border: 1px solid;
+  background-color: white;
   width: 100%;
+  height: 100vh;
+  padding: 0 20px;
+  align-content: flex-start;
 }
 
 .imageContainer {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid;
   height: 311px;
   width: 100%;
   border-radius: 24px;
   border: 2px dashed var(--slate-300, #cbd5e1);
   background: var(--slate-50, #f8fafc);
   position: relative;
+  overflow: hidden;
   .uploadButtonWrapper {
     width: 64px;
     height: 64px;
@@ -28,6 +28,17 @@
     right: 6%;
     fill: var(--slate-200, #e2e8f0);
   }
+}
+
+.uploadedImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 24px;
+}
+
+.imageContainer.hasImage {
+  border: none; /* 이미지가 있으면 점선을 제거 */
 }
 
 .momoCotainer {
@@ -75,6 +86,9 @@
 }
 
 @media (min-width: 1025px) {
+  .container {
+    padding: 0 50px;
+  }
   .imageContainer {
     width: 38%;
     margin-right: 3%;
@@ -98,6 +112,7 @@
   border-radius: 24px;
   border: 2px solid var(--slate-900, #0f172a);
   background: var(--slate-200, #e2e8f0);
+  box-shadow: 3px 3px 1px black;
 }
 
 .deleteButton {
@@ -107,6 +122,7 @@
   border: 2px solid var(--slate-900, #0f172a);
   background: var(--rose-500, #f43f5e);
   margin-left: 10px;
+  box-shadow: 3px 3px 1px black;
 }
 
 .updateButton:hover {

@@ -137,13 +137,15 @@ export default function ItemId() {
       <DetailTodoBar isCompleted={itemDetails?.isCompleted ?? false}>
         {itemDetails?.name}
       </DetailTodoBar>
-      <div className={style.imageContainer}>
+      <div
+        className={`${style.imageContainer} ${imageUrl ? style.hasImage : ''}`}
+      >
         {imageUrl ? (
           <Image
             layout="fill"
             src={imageUrl}
             alt="Uploaded Image"
-            className={style.image}
+            className={style.uploadedImage}
           />
         ) : (
           <Image
