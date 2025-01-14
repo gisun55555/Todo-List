@@ -22,6 +22,7 @@
     gap: 10px;
     border-radius: 23px;
     background: var(--lime-300, #bef264);
+    box-shadow: 3px 3px 1px black;
   }
 }
 
@@ -61,6 +62,7 @@
     gap: 10px;
     border-radius: 23px;
     background: var(--green-700, #15803d);
+    box-shadow: 3px 3px 1px black;
   }
 }
 

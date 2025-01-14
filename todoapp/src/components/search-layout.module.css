@@ -13,6 +13,13 @@
   margin-right: 20px;
   padding: 20px;
   color: var(--slate-500, #64748b);
+  box-shadow: 3px 3px 1px black;
+
+  &:focus {
+    background: var(--slate-100, #f1f5f9);
+    border-color: var(--slate-900, #0f172a);
+    outline: none;
+  }
 }
 
 .container > button {
@@ -22,6 +29,7 @@
   border-radius: 24px;
   border: 2px solid var(--slate-900, #0f172a);
   background: var(--slate-200, #e2e8f0);
+  box-shadow: 3px 3px 1px black;
 }
 
 @media screen and (max-width: 768px) {
