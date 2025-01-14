@@ -23,8 +23,6 @@ export default function ItemId() {
   const router = useRouter();
   const { itemId } = router.query;
   const tenantId = 'example55555';
-  console.log(itemId);
-  console.log(1);
 
   const [imageUrl, setImageUrl] = useState<string>('');
   const [itemDetails, setItemDetails] = useState<Item>({
@@ -36,12 +34,15 @@ export default function ItemId() {
   });
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [memo, setMemo] = useState<string | null>(null);
+  const [title, setTitle] = useState<string>(''); // 제목을 위한 상태 추가
 
   const handleMemoChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMemo(event.target.value);
   };
 
-  console.log(itemDetails);
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value); // 제목 변경
+  };
 
   useEffect(() => {
     if (!itemId || isNaN(Number(itemId))) {
@@ -52,11 +53,11 @@ export default function ItemId() {
     const fetchItemDetails = async () => {
       try {
         const response = await getItemDetails(tenantId, Number(itemId));
-        console.log(response);
         setItemDetails(response);
         if (response.imageUrl) {
           setImageUrl(response.imageUrl);
         }
+        setTitle(response.name); // 제목을 상태로 설정
       } catch (error) {
         console.error('항목 상세 조회 실패:', error);
       }
@@ -71,7 +72,6 @@ export default function ItemId() {
     }
   }, [itemDetails]);
 
-  // 이미지 업로드 함수
   const handleImageUpload = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
@@ -88,24 +88,21 @@ export default function ItemId() {
     try {
       const uploadedImageUrl = await uploadImage(tenantId, file);
       setImageUrl(uploadedImageUrl);
-      console.error('이미지 업로드 성공:', itemDetails);
-      console.log('이미지 업로드 성공:', uploadedImageUrl);
     } catch (error) {
       console.error('이미지 업로드 실패:', error);
     }
   };
 
-  // 수정 함수(이미지and메모)
   const handleUpdateItem = async () => {
     if (!itemId || !itemDetails) return;
 
-    if (!imageUrl || !memo) {
-      alert('이미지와 메모를 모두 입력해주세요.');
+    if (!imageUrl || !memo || !title) {
+      alert('제목, 이미지, 메모를 모두 입력해주세요.');
       return;
     }
 
     const updatedItem = {
-      name: itemDetails.name,
+      name: title, // 수정된 제목을 포함
       memo: memo,
       imageUrl: imageUrl,
       isCompleted: itemDetails.isCompleted ?? false,
@@ -117,10 +114,10 @@ export default function ItemId() {
       router.push('/');
     } catch (error) {
       console.error('항목 수정 실패:', error);
+      alert('항목 수정에 실패했습니다. 다시 시도해주세요.');
     }
   };
 
-  // 삭제
   const handleDeleteItem = async () => {
     if (!itemId) return;
 
@@ -142,7 +139,6 @@ export default function ItemId() {
       await updateItem(tenantId, Number(itemId), {
         isCompleted: updatedStatus,
       });
-      console.log('상태 변경 성공');
     } catch (error) {
       console.error('상태 변경 실패:', error);
     }
@@ -154,7 +150,21 @@ export default function ItemId() {
         isCompleted={itemDetails.isCompleted ?? false}
         onClick={toggleCompletionStatus}
       >
-        {itemDetails?.name}
+        <input
+          type="text"
+          value={title}
+          onChange={handleTitleChange} // 제목 수정
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+          }}
+          style={{
+            all: 'unset',
+            border: 'none',
+            outline: 'none',
+            background: 'transparent',
+          }}
+        />
       </DetailTodoBar>
       <div
         className={`${style.imageContainer} ${imageUrl ? style.hasImage : ''}`}
