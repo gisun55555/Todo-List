@@ -20,7 +20,6 @@ export default function GlobalLayout({ children }: { children: ReactNode }) {
       </header>
 
       <main className={style.main}>{children}</main>
-      {/* <footer>2</footer> */}
     </div>
   );
 }
