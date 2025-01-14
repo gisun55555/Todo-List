@@ -7,6 +7,7 @@ import {
   getItemDetails,
   updateItemDetails,
   deleteItem,
+  updateItem,
 } from '@/api/items';
 import DetailTodoBar from '@/\bcomponents/detail-todo-bar';
 
@@ -132,9 +133,27 @@ export default function ItemId() {
     }
   };
 
+  const toggleCompletionStatus = async () => {
+    const updatedStatus = !itemDetails.isCompleted;
+
+    setItemDetails((prev) => ({ ...prev, isCompleted: updatedStatus }));
+
+    try {
+      await updateItem(tenantId, Number(itemId), {
+        isCompleted: updatedStatus,
+      });
+      console.log('상태 변경 성공');
+    } catch (error) {
+      console.error('상태 변경 실패:', error);
+    }
+  };
+
   return (
     <div className={style.container}>
-      <DetailTodoBar isCompleted={itemDetails?.isCompleted ?? false}>
+      <DetailTodoBar
+        isCompleted={itemDetails.isCompleted ?? false}
+        onClick={toggleCompletionStatus}
+      >
         {itemDetails?.name}
       </DetailTodoBar>
       <div
